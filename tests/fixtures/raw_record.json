@@ -1,0 +1,12 @@
+{
+  "geo_accession": "GSE1000",
+  "gsm_accession": "GSM1000",
+  "title": "Liver biopsy from Alzheimer disease patient",
+  "summary": "RNA-seq of liver tissue from a human donor.",
+  "organism": "Homo sapiens",
+  "sex/gender": "female",
+  "Tissue": "liver",
+  "disease": "Alzheimer disease",
+  "cell_type": "hepatocyte",
+  "description": "biopsy"
+}

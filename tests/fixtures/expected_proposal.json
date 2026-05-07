@@ -1,0 +1,11 @@
+{
+  "record_id": "GSE1000",
+  "validation_report": {
+    "passed": true
+  },
+  "proposed_record": {
+    "tissue": "liver",
+    "organism": "Homo sapiens",
+    "disease": "Alzheimer disease"
+  }
+}

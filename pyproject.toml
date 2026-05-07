@@ -1,0 +1,42 @@
+[build-system]
+requires = ["setuptools>=68", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "fair-metadata-curation"
+version = "0.1.0"
+description = "Validation-first FAIR metadata curation toolkit"
+readme = "README.md"
+requires-python = ">=3.10"
+dependencies = [
+  "pydantic>=2.0",
+  "jsonschema",
+  "click",
+  "requests",
+  "python-dateutil",
+]
+
+[project.optional-dependencies]
+openai = ["openai"]
+linkml = ["linkml"]
+dev = [
+  "pytest",
+  "pytest-mock",
+  "responses",
+]
+
+[project.scripts]
+fair-curate = "fair_metadata_curation.cli:main"
+
+[tool.setuptools]
+package-dir = {"" = "src"}
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.setuptools.package-data]
+fair_metadata_curation = ["schemas/*.json", "schemas/*.yaml", "schemas/*.ttl"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+pythonpath = ["src"]

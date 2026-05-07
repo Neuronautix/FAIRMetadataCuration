@@ -1,0 +1,33 @@
+{
+  "records": [
+    {
+      "geo_accession": "GSE1000",
+      "candidate": {
+        "geo_accession": "GSE1000",
+        "gsm_accession": "GSM1000",
+        "title": "Liver biopsy from Alzheimer disease patient",
+        "summary": "RNA-seq of liver tissue from a human donor.",
+        "organism": "Homo sapiens",
+        "sex": "female",
+        "tissue": "liver",
+        "disease": "Alzheimer disease",
+        "cell_type": "hepatocyte",
+        "description": "biopsy"
+      }
+    },
+    {
+      "geo_accession": "GSE2000",
+      "candidate": {
+        "geo_accession": "GSE2000",
+        "gsm_accession": "GSM2000",
+        "title": "Ambiguous tissue record",
+        "summary": "Test record for ontology review.",
+        "organism": "Homo sapiens",
+        "sex": "unknown",
+        "tissue": "cortex",
+        "disease": "Alzheimer disease",
+        "description": "review me"
+      }
+    }
+  ]
+}
