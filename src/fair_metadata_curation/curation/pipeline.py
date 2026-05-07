@@ -28,7 +28,8 @@ class CurationPipeline:
         self.proposal_builder = ProposalBuilder()
         self.instructions = self.config.get(
             "instructions",
-            "Normalize the metadata into canonical FAIR fields and preserve unknown data under unmapped_fields.",
+            "Propose canonical metadata fields, preserve unknown data under unmapped_fields, and do not assume that "
+            "prompt guidance alone makes the output compliant.",
         )
         self.schema = self.schema_validator.schema
 

@@ -1,2 +1,0 @@
-[console_scripts]
-fair-curate = fair_metadata_curation.cli:main

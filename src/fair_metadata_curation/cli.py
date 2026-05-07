@@ -52,3 +52,7 @@ def main(
         export_jsonld(proposals, str(jsonld_path))
     if report_path:
         report_path.write_text(generate_markdown_report(proposals), encoding="utf-8")
+
+
+if __name__ == "__main__":
+    main()

@@ -19,15 +19,16 @@ class ProposalBuilder:
         attempts: list[dict],
         remediation_attempts: int,
     ) -> CurationProposal:
+        field_proposals = self.provenance_tracker.build(raw_record, attempts, final_record, validation_report)
         return CurationProposal(
             record_id=record_id,
             raw_record=raw_record,
             proposed_record=final_record,
-            field_proposals=self.provenance_tracker.build(raw_record, attempts, final_record, validation_report),
+            field_proposals=field_proposals,
             validation_report=validation_report,
             remediation_attempts=remediation_attempts,
             is_accepted=validation_report.passed and not any(
-                item.validation_status in {"invalid", "unresolved"} for item in self.provenance_tracker.build(raw_record, attempts, final_record, validation_report)
+                item.validation_status in {"invalid", "unresolved"} for item in field_proposals
             ),
             created_at=datetime.now(timezone.utc),
         )

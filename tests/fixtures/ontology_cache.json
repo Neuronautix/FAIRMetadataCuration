@@ -17,9 +17,28 @@
       "match_type": "ambiguous",
       "confidence": 0.5,
       "candidates": [
-        {"id": "UBERON:0000956", "label": "cortex", "iri": "http://purl.obolibrary.org/obo/UBERON_0000956", "score": 10.0},
-        {"id": "UBERON:0001870", "label": "adrenal cortex", "iri": "http://purl.obolibrary.org/obo/UBERON_0001870", "score": 9.8}
+        {
+          "id": "UBERON:0000956",
+          "label": "cortex",
+          "iri": "http://purl.obolibrary.org/obo/UBERON_0000956",
+          "score": 10.0
+        },
+        {
+          "id": "UBERON:0001870",
+          "label": "adrenal cortex",
+          "iri": "http://purl.obolibrary.org/obo/UBERON_0001870",
+          "score": 9.8
+        }
       ]
+    },
+    "mystery tissue": {
+      "id": "mystery tissue",
+      "label": "mystery tissue",
+      "ontology": "UBERON",
+      "iri": null,
+      "match_type": "unresolved",
+      "confidence": 0.0,
+      "candidates": null
     }
   },
   "NCBITAXON": {

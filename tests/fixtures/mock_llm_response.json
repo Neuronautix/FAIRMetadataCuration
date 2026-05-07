@@ -28,6 +28,19 @@
         "disease": "Alzheimer disease",
         "description": "review me"
       }
+    },
+    {
+      "geo_accession": "GSE3000",
+      "candidate": {
+        "geo_accession": "GSE3000",
+        "gsm_accession": "GSM3000",
+        "title": "Record with unresolved tissue",
+        "summary": "Example record for unresolved ontology grounding.",
+        "organism": "Homo sapiens",
+        "sex": "female",
+        "tissue": "mystery tissue",
+        "description": "record missing organism in raw input"
+      }
     }
   ]
 }

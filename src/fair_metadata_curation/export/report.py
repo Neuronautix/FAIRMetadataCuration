@@ -1,10 +1,20 @@
 from __future__ import annotations
 
+from collections import defaultdict
+
 from fair_metadata_curation.models import CurationProposal
 
 
 def generate_markdown_report(proposals: list[CurationProposal]) -> str:
-    total = len(proposals) or 1
+    total = len(proposals)
+    if total == 0:
+        return "\n".join(
+            [
+                "# Validation Report",
+                "",
+                "No proposals were generated, so no validation percentages are available.",
+            ]
+        )
     valid = sum(1 for proposal in proposals if proposal.validation_report.passed)
     schema_valid = sum(1 for proposal in proposals if proposal.validation_report.schema_valid)
     ontology_valid = sum(1 for proposal in proposals if proposal.validation_report.ontology_valid)
@@ -33,8 +43,20 @@ def generate_markdown_report(proposals: list[CurationProposal]) -> str:
             lines.append(f"- Error ({error.layer}/{error.field or 'record'}): {error.message}")
         for warning in proposal.validation_report.warnings:
             lines.append(f"- Warning: {warning}")
-        lines.extend(["", "| Field | Source | Status |", "| --- | --- | --- |"])
+        grouped_fields = defaultdict(list)
         for field in proposal.field_proposals:
-            lines.append(f"| {field.proposed_key} | {field.source_method} | {field.validation_status} |")
+            grouped_fields[field.attempt_number].append(field)
+        for attempt_number, fields in sorted(grouped_fields.items()):
+            lines.extend(
+                [
+                    "",
+                    f"### Attempt {attempt_number}",
+                    "",
+                    "| Field | Source | Status |",
+                    "| --- | --- | --- |",
+                ]
+            )
+            for field in fields:
+                lines.append(f"| {field.proposed_key} | {field.source_method} | {field.validation_status} |")
         lines.append("")
     return "\n".join(lines)

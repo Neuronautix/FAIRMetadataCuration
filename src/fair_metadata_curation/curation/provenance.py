@@ -15,7 +15,7 @@ class ProvenanceTracker:
     ) -> list[FieldCurationProposal]:
         raw_payload = raw_record.model_dump()
         field_proposals: list[FieldCurationProposal] = []
-        for attempt in attempts:
+        for attempt_index, attempt in enumerate(attempts):
             candidate = attempt["record"]
             metadata = attempt.get("metadata", {})
             report = attempt.get("report", validation_report)
@@ -27,6 +27,7 @@ class ProvenanceTracker:
                 status = self._status_for_field(field_name, report)
                 field_proposals.append(
                     FieldCurationProposal(
+                        attempt_number=attempt_index,
                         original_key=field_name if field_name in raw_payload else None,
                         original_value=raw_payload.get(field_name),
                         proposed_key=field_name,

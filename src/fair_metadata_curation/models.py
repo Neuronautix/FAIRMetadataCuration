@@ -86,6 +86,7 @@ class NormalizedMetadataRecord(BaseModel):
 class FieldCurationProposal(BaseModel):
     model_config = ConfigDict(frozen=True)
 
+    attempt_number: int = 0
     original_key: Optional[str] = None
     original_value: Optional[str] = None
     proposed_key: str
