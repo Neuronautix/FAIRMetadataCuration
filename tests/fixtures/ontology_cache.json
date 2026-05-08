@@ -1,0 +1,78 @@
+{
+  "UBERON": {
+    "liver": {
+      "id": "UBERON:0002107",
+      "label": "liver",
+      "ontology": "UBERON",
+      "iri": "http://purl.obolibrary.org/obo/UBERON_0002107",
+      "match_type": "exact_label",
+      "confidence": 1.0,
+      "candidates": null
+    },
+    "cortex": {
+      "id": "UBERON:0000956",
+      "label": "cortex",
+      "ontology": "UBERON",
+      "iri": "http://purl.obolibrary.org/obo/UBERON_0000956",
+      "match_type": "ambiguous",
+      "confidence": 0.5,
+      "candidates": [
+        {
+          "id": "UBERON:0000956",
+          "label": "cortex",
+          "iri": "http://purl.obolibrary.org/obo/UBERON_0000956",
+          "score": 10.0
+        },
+        {
+          "id": "UBERON:0001870",
+          "label": "adrenal cortex",
+          "iri": "http://purl.obolibrary.org/obo/UBERON_0001870",
+          "score": 9.8
+        }
+      ]
+    },
+    "mystery tissue": {
+      "id": "mystery tissue",
+      "label": "mystery tissue",
+      "ontology": "UBERON",
+      "iri": null,
+      "match_type": "unresolved",
+      "confidence": 0.0,
+      "candidates": null
+    }
+  },
+  "NCBITAXON": {
+    "homo sapiens": {
+      "id": "NCBITaxon:9606",
+      "label": "Homo sapiens",
+      "ontology": "NCBITAXON",
+      "iri": "http://purl.obolibrary.org/obo/NCBITaxon_9606",
+      "match_type": "exact_label",
+      "confidence": 1.0,
+      "candidates": null
+    }
+  },
+  "MONDO": {
+    "alzheimer disease": {
+      "id": "MONDO:0004975",
+      "label": "Alzheimer disease",
+      "ontology": "MONDO",
+      "iri": "http://purl.obolibrary.org/obo/MONDO_0004975",
+      "match_type": "exact_label",
+      "confidence": 1.0,
+      "candidates": null
+    }
+  },
+  "CL": {
+    "hepatocyte": {
+      "id": "CL:0000182",
+      "label": "hepatocyte",
+      "ontology": "CL",
+      "iri": "http://purl.obolibrary.org/obo/CL_0000182",
+      "match_type": "exact_label",
+      "confidence": 1.0,
+      "candidates": null
+    }
+  },
+  "CHEBI": {}
+}

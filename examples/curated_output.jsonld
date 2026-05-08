@@ -1,0 +1,49 @@
+[
+  {
+    "@id": "urn:fair-metadata:GSE1000",
+    "@type": "schema:CreativeWork",
+    "schema:name": "Liver biopsy from Alzheimer disease patient",
+    "schema:description": "biopsy",
+    "schema:anatomicalLocation": {
+      "@id": "http://purl.obolibrary.org/obo/UBERON_0002107",
+      "name": "liver"
+    },
+    "schema:taxonRank": {
+      "@id": "http://purl.obolibrary.org/obo/NCBITaxon_9606",
+      "name": "Homo sapiens"
+    },
+    "schema:MedicalCondition": {
+      "@id": "http://purl.obolibrary.org/obo/MONDO_0004975",
+      "name": "Alzheimer disease"
+    }
+  },
+  {
+    "@id": "urn:fair-metadata:GSE2000",
+    "@type": "schema:CreativeWork",
+    "schema:name": "Ambiguous tissue record",
+    "schema:description": "review me",
+    "schema:anatomicalLocation": {
+      "@id": "http://purl.obolibrary.org/obo/UBERON_0000956",
+      "name": "cortex"
+    },
+    "schema:taxonRank": {
+      "@id": "http://purl.obolibrary.org/obo/NCBITaxon_9606",
+      "name": "Homo sapiens"
+    },
+    "schema:MedicalCondition": {
+      "@id": "http://purl.obolibrary.org/obo/MONDO_0004975",
+      "name": "Alzheimer disease"
+    }
+  },
+  {
+    "@id": "urn:fair-metadata:GSE3000",
+    "@type": "schema:CreativeWork",
+    "schema:name": "Record with unresolved tissue",
+    "schema:description": "record missing organism in raw input",
+    "schema:anatomicalLocation": "mystery tissue",
+    "schema:taxonRank": {
+      "@id": "http://purl.obolibrary.org/obo/NCBITaxon_9606",
+      "name": "Homo sapiens"
+    }
+  }
+]

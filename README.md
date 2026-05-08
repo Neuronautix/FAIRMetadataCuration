@@ -1,88 +1,107 @@
 # FAIRMetadataCuration
 
-**Enhancing FAIR Metadata Curation with AI‑Assisted Models and Structured Templates**
+Validation-first FAIR metadata curation toolkit for transforming raw GEO/BioSample-style metadata into auditable curation proposals.
 
-Scientific metadata often suffer from incompleteness, inconsistency, and formatting errors, which hinder effective discovery, reuse, and interoperability of associated data. The **FAIRMetadataCuration** project provides tools and notebooks for improving metadata quality by combining large language models with structured metadata templates to standardize, refine, and correct metadata at scale.
+> **Epistemic caution**
+> LLM output is **proposal-only**. The model does not ensure FAIRness, enforce standards, or guarantee ontology compliance. It only proposes candidate corrections. Deterministic parsing, schema validation, ontology grounding, semantic validation, provenance capture, validation reports, and optional human review decide whether a proposal is accepted.
 
-This repository implements workflows that leverage GPT‑based models and community‑driven metadata structures to bring metadata closer to **FAIR** principles (Findable, Accessible, Interoperable, Reusable).
+## Why the repository changed
 
----
+The original notebooks used prompt-guided normalization and parsed model output with `eval(...)`. That is unsafe and scientifically weak for FAIR reuse because mentioning BioSample, CEDAR, or ontology terms in a prompt does **not** make output compliant. Compliance requires explicit machine-checkable contracts.
 
-## 🚀 Features
+This repository now centers on a Python package that places LLM-generated candidates inside a reproducible validation pipeline.
 
-- 🧠 **AI‑Assisted Metadata Correction**  
-  Correct and standardize metadata records using GPT models in batch workflows.
+## Architecture
 
-- 📊 **Evaluation of Metadata Quality**  
-  Tools to compute recall, precision, and F1 scores against gold‑standard metadata.
-
-- 📦 **Dataset Creation Utilities**  
-  Scripts and notebooks for generating datasets from public sources like GEO and BioSample.
-
-- 📘 Based on research demonstrating improved metadata recall with automated FAIRification methods, significantly enhancing downstream search performance.
-
----
-
-## 📦 Repository Structure
-
-| File / Folder | Description |
-|---------------|-------------|
-| `MetadataCorrection-gpt.ipynb` | Notebook to run GPT‑driven metadata correction workflows. |
-| `metadata-refine.ipynb` | Notebook for computing evaluation metrics against gold standards. |
-| `GEODatasetGenerator.ipynb` | Script to generate curated GEO datasets for experiments. |
-| `Rules.ipynb` | Notebook used to derive gold‑standard rules for metadata refinement. |
-| `README.md` | This documentation file. |
-| `LICENSE` | MIT License for open reuse. |
-
----
-
-## 🛠️ Getting Started
-
-### 🔁 Prerequisites
-
-- Python environment with necessary packages (e.g., Jupyter, OpenAI SDK)  
-- OpenAI API key if using notebooks with GPT‑based correction  
-- Access to raw metadata sources (BioSample, GEO, or others)
-
-## Data
-The data is available [here](https://doi.org/10.5281/zenodo.15617182).
-
-
-
-## Citation
-The paper is available [here](https://arxiv.org/abs/2504.05307). Please consider using the following BibTex for citation.
-```
-@misc{sundaram2025totalrecallenhancingfairness,
-      title={Toward Total Recall: Enhancing FAIRness through AI-Driven Metadata Standardization}, 
-      author={Sowmya S Sundaram and Rafael S. Gonçalves and Mark A Musen},
-      year={2025},
-      eprint={2504.05307},
-      archivePrefix={arXiv},
-      primaryClass={cs.IR},
-      url={https://arxiv.org/abs/2504.05307}, 
-}
+```text
+raw metadata
+→ deterministic preprocessing
+→ LLM candidate proposal
+→ safe JSON parsing
+→ JSON Schema / Pydantic validation
+→ ontology grounding
+→ semantic validation
+→ remediation loop if needed
+→ curation proposal with provenance
+→ human-review-ready output
+→ validated JSON / JSON-LD export
 ```
 
-## License
-MIT License
+## Validation layers
 
-Copyright (c) 2025 Mark Musen's Lab
+1. **Safe parsing** — `json.loads()` only; no `eval()`, `exec()`, or unsafe deserialization.
+2. **Schema validation** — JSON Schema and Pydantic models constrain accepted fields and value shapes.
+3. **Field allowlist checks** — unknown keys are rejected unless preserved in `unmapped_fields`.
+4. **Ontology grounding** — accepted grounded fields carry ontology IDs, labels, confidence, and match evidence.
+5. **Semantic validation** — deterministic checks catch inconsistent values such as invalid `sex` labels.
+6. **Provenance and review** — every accepted proposal is auditable, and ambiguous/unresolved cases remain visible.
 
-Permission is hereby granted, free of charge, to any person obtaining a copy
-of this software and associated documentation files (the "Software"), to deal
-in the Software without restriction, including without limitation the rights
-to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-copies of the Software, and to permit persons to whom the Software is
-furnished to do so, subject to the following conditions:
+## Package layout
 
-The above copyright notice and this permission notice shall be included in all
-copies or substantial portions of the Software.
+```text
+src/fair_metadata_curation/
+├── models.py
+├── preprocessing.py
+├── io.py
+├── llm/
+├── ontology/
+├── validation/
+├── curation/
+├── export/
+└── cli.py
+```
 
-THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-SOFTWARE.
+Schemas live in `src/fair_metadata_curation/schemas/` as JSON Schema, LinkML, and SHACL resources.
 
+## Quickstart
+
+```bash
+python -m pip install -e '.[dev]'
+python -m pytest
+```
+
+Run the mock-backed end-to-end pipeline:
+
+```bash
+fair-curate examples/input_records.jsonl \
+  --schema biosample_cedar \
+  --out examples/curated_output.jsonl \
+  --report examples/validation_report.md \
+  --jsonld examples/curated_output.jsonld \
+  --max-remediation-attempts 3 \
+  --mock
+```
+
+## CLI behavior
+
+The CLI writes:
+
+- normalized JSONL output
+- JSON-LD output
+- a markdown validation report
+- an audit JSON next to the JSONL output
+
+`--mock` uses deterministic fixtures so tests and examples do not require network calls.
+
+## Notebook demos
+
+- `notebooks/01_original_prompt_baseline.ipynb` preserves the original prompt-only baseline and starts with an explicit safety warning.
+- `notebooks/02_validated_curation_pipeline.ipynb` demonstrates loading JSONL, running the package pipeline, inspecting proposals, and exporting outputs.
+
+## Scientific rationale
+
+FAIR metadata reuse depends on more than plausible text. A free-text label that resembles an ontology term is not enough. Accepted ontology-grounded fields should carry resolvable identifiers, preferred labels, match evidence, confidence, and provenance. Ambiguous or unresolved matches must remain flagged for review rather than being silently treated as valid.
+
+Likewise, prompt-guided standardization is not schema validation. BioSample or CEDAR wording in a prompt can guide a proposal, but it cannot replace JSON Schema, Pydantic, LinkML, SHACL, controlled vocabularies, or machine-readable validation reports.
+
+## Example report excerpt
+
+See `examples/validation_report.md` for a generated example. The report summarizes valid %, schema-valid %, ontology-resolved %, and records that still require review.
+
+## Migration notes
+
+See [MIGRATION.md](MIGRATION.md) for how the original notebook logic maps into the package.
+
+## Original project context
+
+The original notebooks remain in the repository for reference and demo purposes, but core curation logic now lives in importable Python modules and tests.

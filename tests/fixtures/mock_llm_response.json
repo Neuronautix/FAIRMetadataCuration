@@ -1,0 +1,46 @@
+{
+  "records": [
+    {
+      "geo_accession": "GSE1000",
+      "candidate": {
+        "geo_accession": "GSE1000",
+        "gsm_accession": "GSM1000",
+        "title": "Liver biopsy from Alzheimer disease patient",
+        "summary": "RNA-seq of liver tissue from a human donor.",
+        "organism": "Homo sapiens",
+        "sex": "female",
+        "tissue": "liver",
+        "disease": "Alzheimer disease",
+        "cell_type": "hepatocyte",
+        "description": "biopsy"
+      }
+    },
+    {
+      "geo_accession": "GSE2000",
+      "candidate": {
+        "geo_accession": "GSE2000",
+        "gsm_accession": "GSM2000",
+        "title": "Ambiguous tissue record",
+        "summary": "Test record for ontology review.",
+        "organism": "Homo sapiens",
+        "sex": "unknown",
+        "tissue": "cortex",
+        "disease": "Alzheimer disease",
+        "description": "review me"
+      }
+    },
+    {
+      "geo_accession": "GSE3000",
+      "candidate": {
+        "geo_accession": "GSE3000",
+        "gsm_accession": "GSM3000",
+        "title": "Record with unresolved tissue",
+        "summary": "Example record for unresolved ontology grounding.",
+        "organism": "Homo sapiens",
+        "sex": "female",
+        "tissue": "mystery tissue",
+        "description": "record missing organism in raw input"
+      }
+    }
+  ]
+}

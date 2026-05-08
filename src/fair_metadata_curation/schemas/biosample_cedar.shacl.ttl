@@ -1,0 +1,23 @@
+@prefix sh: <http://www.w3.org/ns/shacl#> .
+@prefix schema: <https://schema.org/> .
+@prefix ex: <https://example.org/fair-metadata-curation/> .
+
+ex:NormalizedMetadataShape
+  a sh:NodeShape ;
+  sh:targetClass ex:NormalizedMetadataRecord ;
+  sh:property [
+    sh:path schema:name ;
+    sh:maxCount 1 ;
+  ] ;
+  sh:property [
+    sh:path schema:description ;
+    sh:maxCount 1 ;
+  ] ;
+  sh:property [
+    sh:path schema:anatomicalLocation ;
+    sh:maxCount 1 ;
+  ] ;
+  sh:property [
+    sh:path schema:medicalCondition ;
+    sh:maxCount 1 ;
+  ] .

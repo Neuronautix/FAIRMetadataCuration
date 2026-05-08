@@ -1,0 +1,78 @@
+id: https://example.org/fair-metadata-curation/biosample_cedar
+name: biosample_cedar
+prefixes:
+  linkml: https://w3id.org/linkml/
+  schema: https://schema.org/
+  bioschemas: https://bioschemas.org/
+default_prefix: biosample_cedar
+default_range: string
+classes:
+  NormalizedMetadataRecord:
+    description: Canonical FAIR metadata record normalized from raw GEO or BioSample metadata.
+    slots:
+      - geo_accession
+      - gsm_accession
+      - title
+      - summary
+      - organism
+      - age
+      - biomaterial_provider
+      - sex
+      - tissue
+      - cell_type
+      - cell_line
+      - design
+      - disease
+      - treatment
+      - description
+slots:
+  geo_accession:
+    description: GEO series accession for the study.
+    examples:
+      - value: GSE12345
+    exact_mappings:
+      - schema:identifier
+  gsm_accession:
+    description: GEO sample accession.
+    examples:
+      - value: GSM67890
+    exact_mappings:
+      - schema:identifier
+  title:
+    description: Human readable study or sample title.
+    exact_mappings:
+      - schema:name
+  summary:
+    description: Summary text describing the study.
+    exact_mappings:
+      - schema:description
+  organism:
+    description: Organism or species name.
+    examples:
+      - value: Homo sapiens
+    exact_mappings:
+      - bioschemas:taxon
+  age:
+    description: Age at sampling.
+  biomaterial_provider:
+    description: Lab, provider, or collection that supplied the material.
+  sex:
+    description: Biological sex of the sampled organism.
+  tissue:
+    description: Tissue or anatomical site.
+    exact_mappings:
+      - schema:anatomicalLocation
+  cell_type:
+    description: Cell type or lineage.
+  cell_line:
+    description: Cell line name when applicable.
+  design:
+    description: Study design or experimental design.
+  disease:
+    description: Disease or health condition.
+    exact_mappings:
+      - schema:medicalCondition
+  treatment:
+    description: Treatment or perturbation.
+  description:
+    description: Free-text sample description.
